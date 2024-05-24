@@ -32,15 +32,15 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.firebasechatdemo.R
 import com.example.firebasechatdemo.response.AddChatMessageModel
 import com.example.firebasechatdemo.screens.common.SpacerHorizontal
 import com.example.firebasechatdemo.screens.common.SpacerVertical
-import com.example.firebasechatdemo.utils.SessionManagerClass
-import com.example.firebasechatdemo.R
+import com.example.firebasechatdemo.ui.theme.blueBgColorLight
 import com.example.firebasechatdemo.ui.theme.fontRegular
 import com.example.firebasechatdemo.ui.theme.fontSemiBold
-import com.example.firebasechatdemo.ui.theme.lightGrey
-import com.example.firebasechatdemo.ui.theme.loginBgColor
+import com.example.firebasechatdemo.ui.theme.whiteColor
+import com.example.firebasechatdemo.utils.SessionManagerClass
 
 @Composable
 fun TabViewTile(
@@ -54,7 +54,7 @@ fun TabViewTile(
     Column(
         modifier = modifier
             .fillMaxWidth()
-            .padding(vertical = 15.dp),
+            .padding(vertical = 0.dp),
     ) {
         Row(
             modifier = modifier
@@ -69,7 +69,7 @@ fun TabViewTile(
             ) {
                 Text(
                     text = name,
-                    style = fontSemiBold.copy(color = Color.Black, fontSize = 18.sp),
+                    style = fontSemiBold.copy(color = whiteColor, fontSize = 18.sp),
                     modifier = modifier.background(backgroundColor)
                 )
                 SpacerVertical(3.dp)
@@ -79,12 +79,12 @@ fun TabViewTile(
                             painter = painterResource(id = R.drawable.gallery),
                             contentDescription = "",
                             modifier.size(15.dp),
-                            colorFilter = ColorFilter.tint(Color.Black)
+                            colorFilter = ColorFilter.tint(whiteColor.copy(alpha = 0.5f))
                         )
                         SpacerHorizontal(5.dp)
                         Text(
                             text = stringResource(R.string.photo),
-                            style = fontRegular.copy(color = Color.Black, fontSize = 14.sp),
+                            style = fontRegular.copy(color = whiteColor.copy(alpha = 0.5f), fontSize = 14.sp),
                             modifier = modifier.background(backgroundColor),
                             maxLines = 1,
                             overflow = TextOverflow.Ellipsis
@@ -93,7 +93,7 @@ fun TabViewTile(
                 } else if (lastMessageForUser?.last_msg?.isNotEmpty() == true) {
                     Text(
                         text = lastMessageForUser.last_msg,
-                        style = fontRegular.copy(color = Color.Black, fontSize = 14.sp),
+                        style = fontRegular.copy(color = whiteColor.copy(alpha = 0.5f), fontSize = 14.sp),
                         modifier = modifier.background(backgroundColor),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
@@ -101,7 +101,7 @@ fun TabViewTile(
                 } else {
                     Text(
                         text = "",
-                        style = fontRegular.copy(color = Color.Black, fontSize = 14.sp),
+                        style = fontRegular.copy(color = whiteColor.copy(alpha = 0.5f), fontSize = 14.sp),
                         modifier = modifier.background(backgroundColor),
                         maxLines = 1,
                         overflow = TextOverflow.Ellipsis
@@ -122,11 +122,11 @@ fun TabViewTile(
                         modifier = modifier
                             .size(20.dp)
                             .clip(shape = CircleShape)
-                            .background(loginBgColor), contentAlignment = Alignment.Center
+                            .background(whiteColor), contentAlignment = Alignment.Center
                     ) {
                         Text(
                             text = unReadCount,
-                            style = fontRegular.copy(color = Color.White, fontSize = 12.sp),
+                            style = fontRegular.copy(color = Color.Black, fontSize = 12.sp),
                             modifier = modifier.background(backgroundColor)
                         )
                     }
@@ -136,7 +136,7 @@ fun TabViewTile(
                 if (lastMessageForUser?.last_msg?.isNotEmpty() == true){
                     Text(
                         text = dateTime,
-                        style = fontRegular.copy(color = lightGrey, fontSize = 12.sp),
+                        style = fontRegular.copy(color = whiteColor.copy(alpha = 0.5f), fontSize = 12.sp),
                         modifier = modifier.background(backgroundColor)
                     )
                 }
@@ -144,9 +144,9 @@ fun TabViewTile(
         }
         Divider(
             modifier = Modifier
-                .padding(end = 10.dp, start = 10.dp, top = 5.dp)
+                .padding(vertical =  12.dp)
                 .height(0.5.dp)
-                .background(Color.Cyan)
+                .background(whiteColor)
         )
     }
 }
@@ -164,9 +164,7 @@ fun HomeTopBar(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(60.dp)
-                .border(
-                    width = 2.dp, color = loginBgColor, shape = RoundedCornerShape(0.dp)
-                )
+                .background(color = blueBgColorLight)
                 .padding(15.dp)
         ) {
             Box(
@@ -184,7 +182,7 @@ fun HomeTopBar(
                         text = "Hey, ${sessionManagerClass.loginUserData?.name}",
                         fontWeight = FontWeight.W700,
                         fontSize = 20.sp,
-                        color = Color.Black,
+                        color = whiteColor,
                         fontFamily = FontFamily(Font(R.font.urbanist_semibold)),
                         modifier = Modifier
                             .fillMaxWidth()
@@ -198,7 +196,7 @@ fun HomeTopBar(
                         .clip(shape = RoundedCornerShape(8.dp))
                         .background(Color.Transparent)
                         .border(
-                            width = 1.dp, color = loginBgColor, shape = RoundedCornerShape(8.dp)
+                            width = 1.dp, color = whiteColor, shape = RoundedCornerShape(8.dp)
                         )
                         .padding(3.dp)
                         .clickable(
@@ -211,7 +209,7 @@ fun HomeTopBar(
                         Image(
                             painter = painterResource(id = R.drawable.power_off),
                             contentDescription = "",
-                            colorFilter = ColorFilter.tint(loginBgColor),
+                            colorFilter = ColorFilter.tint(whiteColor),
                             modifier = Modifier.size(20.dp)
                         )
                     }

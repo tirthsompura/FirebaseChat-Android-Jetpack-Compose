@@ -2,7 +2,6 @@ package com.example.firebasechatdemo.screens.common
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -35,7 +34,6 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.onFocusChanged
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.painter.Painter
@@ -52,13 +50,9 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.firebasechatdemo.R
-import com.example.firebasechatdemo.ui.theme.buttonGradientColor1
-import com.example.firebasechatdemo.ui.theme.buttonGradientColor2
-import com.example.firebasechatdemo.ui.theme.commonBackground
-import com.example.firebasechatdemo.ui.theme.disabledTextFieldColor
+import com.example.firebasechatdemo.ui.theme.blueBgColorLight
 import com.example.firebasechatdemo.ui.theme.fontRegular
-import com.example.firebasechatdemo.ui.theme.lightGrey
-import com.example.firebasechatdemo.ui.theme.loginBgColor
+import com.example.firebasechatdemo.ui.theme.whiteColor
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 @Composable
@@ -159,10 +153,10 @@ fun OutlinedSimpleTextFiled(
             value = name.value,
 
             colors = OutlinedTextFieldDefaults.colors(
-                focusedBorderColor = loginBgColor,
-                unfocusedBorderColor = lightGrey,
-                cursorColor = loginBgColor,
-                disabledBorderColor = lightGrey,
+                focusedBorderColor = whiteColor,
+                unfocusedBorderColor = whiteColor.copy(alpha = 0.5f),
+                cursorColor = whiteColor,
+                disabledBorderColor = whiteColor,
             ),
             isError = errorMsg.isNotEmpty(),
             readOnly = readOnly,
@@ -170,7 +164,7 @@ fun OutlinedSimpleTextFiled(
                 Text(
                     text = placeHolder,
                     style = fontRegular.copy(
-                        color = if (isDisabled) disabledTextFieldColor else lightGrey,
+                        color = if (isDisabled) whiteColor else whiteColor.copy(alpha = 0.8f),
                         fontSize = labelTextSize.value,
                         lineHeight = labelLineHeight.value
                     )
@@ -204,12 +198,12 @@ fun OutlinedSimpleTextFiled(
                 }
                 //Change label size
                 if (name.value.isNotEmpty()) {
-                    labelTextSize.value = 12.sp
+                    labelTextSize.value = 18.sp
                     labelLineHeight.value = 18.sp
                 }
             },
             textStyle = fontRegular.copy(
-                color = if (isDisabled) disabledTextFieldColor else Color.Black,
+                color = if (isDisabled) whiteColor else whiteColor,
                 fontWeight = FontWeight.W400,
                 textAlign = TextAlign.Start, fontSize = 16.sp, lineHeight = 20.sp
             ),
@@ -245,7 +239,7 @@ fun OutlinedSimpleTextFiled(
                             contentDescription = "",
                             modifier = Modifier
                                 .padding(end = 15.dp),
-                            colorFilter = ColorFilter.tint(color = disabledTextFieldColor)
+                            colorFilter = ColorFilter.tint(color = whiteColor.copy(alpha = 0.5f))
                         )
                     } else
                         Image(
@@ -281,10 +275,7 @@ fun OutlinedSimpleTextFiled(
 
 @Composable
 fun GradientButton(
-    gradientColors: List<Color> = listOf(
-        buttonGradientColor1, buttonGradientColor2
-    ),
-    backgroundColor: Color = loginBgColor,
+    backgroundColor: Color = blueBgColorLight,
     style: TextStyle,
     label: String,
     buttonHeight: Dp = 50.dp,
@@ -301,11 +292,7 @@ fun GradientButton(
             .fillMaxWidth()
             .height(buttonHeight)
             .clip(shape = RoundedCornerShape(borderRadious))
-            .border(
-                width = 2.dp,
-                brush = Brush.verticalGradient(colors = gradientColors),
-                shape = RoundedCornerShape(borderRadious)
-            )
+
             .background(backgroundColor)
             .clickable(
                 interactionSource = interactionSource,
@@ -329,7 +316,7 @@ fun GradientButton(
 @Composable
 fun GradientButtonWithIcon1(
     icon: Painter?,
-    backgroundColor: Color = loginBgColor,
+    backgroundColor: Color = blueBgColorLight,
     style: TextStyle,
     label: String,
     height: Dp = 40.dp,
@@ -398,7 +385,7 @@ fun DeleteButtonWithIconTile(
                 indication = null,
                 onClick = { deleteItem() }
             )
-            .background(commonBackground),
+            .background(whiteColor),
         contentAlignment = Alignment.Center
     ) {
         Row(
@@ -428,10 +415,10 @@ fun ChangeStatusBarColor() {
     val darkTheme = isSystemInDarkTheme()
     SideEffect {
         systemUiController.setSystemBarsColor(
-            color = if (darkTheme) loginBgColor else loginBgColor, darkIcons = true
+            color = if (darkTheme) blueBgColorLight else blueBgColorLight, darkIcons = true
         )
         systemUiController.setNavigationBarColor(
-            color = if (darkTheme) loginBgColor else loginBgColor, darkIcons = true
+            color = if (darkTheme) blueBgColorLight else blueBgColorLight, darkIcons = true
         )
     }
 }

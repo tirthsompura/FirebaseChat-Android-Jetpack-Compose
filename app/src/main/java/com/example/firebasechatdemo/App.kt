@@ -60,6 +60,5 @@ class App : Application() {
         override fun onActivityDestroyed(activity: Activity) {
 
         }
-
     }
 }

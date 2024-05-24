@@ -1,6 +1,7 @@
 package com.example.firebasechatdemo.screens.authentication.login
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -21,7 +22,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.Font
@@ -31,21 +31,22 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.firebasechatdemo.R
 import com.example.firebasechatdemo.navigations.AuthenticationScreens
 import com.example.firebasechatdemo.screens.common.ChangeStatusBarColor
 import com.example.firebasechatdemo.screens.common.GradientButton
 import com.example.firebasechatdemo.screens.common.OutlinedSimpleTextFiled
 import com.example.firebasechatdemo.screens.common.SpacerVertical
+import com.example.firebasechatdemo.ui.theme.blueBgColor
+import com.example.firebasechatdemo.ui.theme.blueBgColorLight
+import com.example.firebasechatdemo.ui.theme.fontMedium
+import com.example.firebasechatdemo.ui.theme.whiteColor
 import com.example.firebasechatdemo.utils.AuthFirebase
 import com.example.firebasechatdemo.utils.RootGraph
 import com.example.firebasechatdemo.utils.ValidationConstants
 import com.example.firebasechatdemo.utils.isEmpty
 import com.example.firebasechatdemo.utils.isValidEmail
 import com.example.firebasechatdemo.utils.isValidPassword
-import com.example.firebasechatdemo.R
-import com.example.firebasechatdemo.ui.theme.fontMedium
-import com.example.firebasechatdemo.ui.theme.lightGrey
-import com.example.firebasechatdemo.ui.theme.loginBgColor
 
 @SuppressLint("UnrememberedMutableState")
 @OptIn(ExperimentalComposeUiApi::class)
@@ -72,7 +73,7 @@ fun LoginScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(200.dp)
-                    .background(loginBgColor)
+                    .background(blueBgColorLight)
                     .padding(bottom = 30.dp),
                 contentAlignment = Alignment.Center
             ) {
@@ -80,22 +81,23 @@ fun LoginScreen(
                     text = stringResource(R.string.login),
                     fontWeight = FontWeight.W700,
                     fontSize = 25.sp,
-                    color = Color.White,
+                    color = whiteColor,
                     fontFamily = FontFamily(Font(R.font.urbanist_semibold)),
                 )
             }
         }
 
         Card(
-            shape = RoundedCornerShape(10.dp),
-            elevation = CardDefaults.cardElevation(3.dp),
-            colors = CardDefaults.cardColors(Color.White),
+            shape = RoundedCornerShape(20.dp),
+            elevation = CardDefaults.cardElevation(0.dp),
+            colors = CardDefaults.cardColors(blueBgColor),
+            border = BorderStroke(width = 4.dp, color = whiteColor),
             modifier = Modifier
                 .padding(top = 150.dp, start = 20.dp, end = 20.dp)
                 .fillMaxWidth()
         ) {
             Column(
-                modifier = Modifier.padding(15.dp),
+                modifier = Modifier.padding(20.dp),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Top
             ) {
@@ -127,7 +129,7 @@ fun LoginScreen(
                     style = fontMedium.copy(
                         fontSize = 18.sp,
                         lineHeight = 24.sp,
-                        color = Color.White
+                        color = whiteColor
                     ),
                     label = stringResource(R.string.login),
                     modifier = Modifier.fillMaxWidth(),
@@ -152,14 +154,14 @@ fun LoginScreen(
                         text = stringResource(R.string.don_t_have_an_account),
                         fontWeight = FontWeight.W400,
                         fontSize = 15.sp,
-                        color = lightGrey,
+                        color = whiteColor.copy(alpha = 0.5f),
                         fontFamily = FontFamily(Font(R.font.urbanist_regular)),
                     )
                     Text(
                         text = stringResource(R.string.createAccount),
                         fontWeight = FontWeight.W700,
                         fontSize = 15.sp,
-                        color = loginBgColor,
+                        color = whiteColor,
                         fontFamily = FontFamily(Font(R.font.urbanist_semibold)),
                         modifier = Modifier.clickable(
                             interactionSource = interactionSource,

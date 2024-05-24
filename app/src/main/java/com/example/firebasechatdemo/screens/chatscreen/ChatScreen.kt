@@ -8,6 +8,7 @@ import android.provider.MediaStore
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -29,6 +30,7 @@ import com.example.firebasechatdemo.screens.chatscreen.component.RightChatItem
 import com.example.firebasechatdemo.screens.common.ChatDetailTopBar
 import com.example.firebasechatdemo.screens.common.deleteConfirmationDialog
 import com.example.firebasechatdemo.R
+import com.example.firebasechatdemo.ui.theme.blueBgColor
 
 @RequiresApi(Build.VERSION_CODES.O)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -127,6 +129,7 @@ fun ChatBody(
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .background(color = blueBgColor)
             .padding(
                 top = 60.dp,
                 bottom = if (!chatViewModel.imageUriValue.value.isNullOrEmpty()) 170.dp else 90.dp

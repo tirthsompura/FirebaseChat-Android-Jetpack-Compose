@@ -2,6 +2,7 @@ package com.example.firebasechatdemo.screens.authentication.signup
 
 import android.annotation.SuppressLint
 import android.widget.Toast
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
@@ -35,12 +36,17 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.example.firebasechatdemo.response.UserResponse
+import com.example.firebasechatdemo.R
 import com.example.firebasechatdemo.navigations.AuthenticationScreens
+import com.example.firebasechatdemo.response.UserResponse
 import com.example.firebasechatdemo.screens.common.ChangeStatusBarColor
 import com.example.firebasechatdemo.screens.common.GradientButton
 import com.example.firebasechatdemo.screens.common.OutlinedSimpleTextFiled
 import com.example.firebasechatdemo.screens.common.SpacerVertical
+import com.example.firebasechatdemo.ui.theme.blueBgColor
+import com.example.firebasechatdemo.ui.theme.blueBgColorLight
+import com.example.firebasechatdemo.ui.theme.fontRegular
+import com.example.firebasechatdemo.ui.theme.whiteColor
 import com.example.firebasechatdemo.utils.AuthFirebase
 import com.example.firebasechatdemo.utils.FirebaseKeyConstants.Name
 import com.example.firebasechatdemo.utils.FirebaseKeyConstants.ONLINE
@@ -49,10 +55,6 @@ import com.example.firebasechatdemo.utils.ValidationConstants
 import com.example.firebasechatdemo.utils.isEmpty
 import com.example.firebasechatdemo.utils.isValidEmail
 import com.example.firebasechatdemo.utils.isValidPassword
-import com.example.firebasechatdemo.R
-import com.example.firebasechatdemo.ui.theme.fontRegular
-import com.example.firebasechatdemo.ui.theme.lightGrey
-import com.example.firebasechatdemo.ui.theme.loginBgColor
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 
@@ -105,7 +107,7 @@ fun SignUpScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(200.dp)
-                    .background(loginBgColor)
+                    .background(blueBgColorLight)
                     .padding(bottom = 30.dp),
                 contentAlignment = Alignment.Center
             ) {
@@ -120,9 +122,10 @@ fun SignUpScreen(
         }
 
         Card(
-            shape = RoundedCornerShape(10.dp),
-            elevation = CardDefaults.cardElevation(3.dp),
-            colors = CardDefaults.cardColors(Color.White),
+            shape = RoundedCornerShape(20.dp),
+            elevation = CardDefaults.cardElevation(0.dp),
+            colors = CardDefaults.cardColors(blueBgColor),
+            border = BorderStroke(width = 4.dp, color = whiteColor),
             modifier = Modifier
                 .padding(top = 150.dp, start = 20.dp, end = 20.dp)
                 .fillMaxWidth()
@@ -196,14 +199,14 @@ fun SignUpScreen(
                         text = stringResource(R.string.already_have_an_account),
                         fontWeight = FontWeight.W400,
                         fontSize = 15.sp,
-                        color = lightGrey,
+                        color = whiteColor.copy(alpha = 0.5f),
                         fontFamily = FontFamily(Font(R.font.urbanist_regular)),
                     )
                     Text(
                         text = stringResource(R.string.login),
                         fontWeight = FontWeight.W700,
                         fontSize = 15.sp,
-                        color = loginBgColor,
+                        color = whiteColor,
                         fontFamily = FontFamily(Font(R.font.urbanist_semibold)),
                         modifier = Modifier.clickable(
                             interactionSource = interactionSource,

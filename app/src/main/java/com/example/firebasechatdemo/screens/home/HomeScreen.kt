@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -29,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import com.example.firebasechatdemo.R
 import com.example.firebasechatdemo.navigations.AuthenticationScreens
 import com.example.firebasechatdemo.response.AddChatMessageModel
 import com.example.firebasechatdemo.response.UserResponse
@@ -37,13 +37,13 @@ import com.example.firebasechatdemo.screens.common.deleteConfirmationDialog
 import com.example.firebasechatdemo.screens.common.getDataFromFirestore.getAllMessages
 import com.example.firebasechatdemo.screens.common.getDataFromFirestore.getAllUsersFromFirebase
 import com.example.firebasechatdemo.screens.common.getDataFromFirestore.getCurrentUserId
+import com.example.firebasechatdemo.ui.theme.blueBgColor
+import com.example.firebasechatdemo.ui.theme.fontMedium
+import com.example.firebasechatdemo.ui.theme.whiteColor
 import com.example.firebasechatdemo.utils.AuthFirebase
 import com.example.firebasechatdemo.utils.SessionManagerClass
 import com.example.firebasechatdemo.utils.getTimeFromTimestamp
 import com.example.firebasechatdemo.utils.toPrettyJson
-import com.example.firebasechatdemo.R
-import com.example.firebasechatdemo.ui.theme.fontMedium
-import com.example.firebasechatdemo.ui.theme.lightGrey
 import com.google.firebase.auth.FirebaseUser
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -125,9 +125,9 @@ fun HomeScreenBody(
 
     Column(
         modifier = Modifier
-            .padding(top = 100.dp, start = 5.dp, end = 5.dp)
             .fillMaxSize()
-            .background(Color.White),
+            .background(blueBgColor)
+            .padding(top = 100.dp, start = 5.dp, end = 5.dp),
         verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
@@ -135,7 +135,7 @@ fun HomeScreenBody(
             if (viewModel.users.isNotEmpty()) {
                 LazyColumn(
                     modifier = Modifier
-                        .padding(bottom = 15.dp)
+                        .padding(bottom = 15.dp, top = 10.dp)
                         .offset(y = (-40).dp)
                         .fillMaxWidth()
                 ) {
@@ -175,12 +175,11 @@ fun HomeScreenBody(
             } else {
                 Box(
                     modifier = Modifier
-                        .fillMaxWidth()
-                        .height(300.dp), contentAlignment = Alignment.Center
+                        .fillMaxSize(), contentAlignment = Alignment.Center
                 ) {
                     NormalText(
                         label = stringResource(R.string.no_data_found),
-                        style = fontMedium.copy(color = lightGrey, fontSize = 16.sp)
+                        style = fontMedium.copy(color = whiteColor, fontSize = 16.sp)
                     )
                 }
             }

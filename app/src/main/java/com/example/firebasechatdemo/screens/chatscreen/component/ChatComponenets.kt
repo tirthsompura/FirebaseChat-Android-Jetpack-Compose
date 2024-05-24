@@ -27,6 +27,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -35,6 +36,7 @@ import androidx.compose.material3.BottomSheetDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -68,16 +70,18 @@ import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.compose.rememberImagePainter
 import coil.request.ImageRequest
+import com.example.firebasechatdemo.R
 import com.example.firebasechatdemo.response.AddChatMessageModel
 import com.example.firebasechatdemo.screens.chatscreen.ChatViewModel
 import com.example.firebasechatdemo.screens.common.NormalText
 import com.example.firebasechatdemo.screens.common.SpacerHorizontal
 import com.example.firebasechatdemo.screens.common.SpacerVertical
-import com.example.firebasechatdemo.utils.getTimeFromTimestamp
-import com.example.firebasechatdemo.R
+import com.example.firebasechatdemo.ui.theme.blueBgColor
+import com.example.firebasechatdemo.ui.theme.darkBlueSenderBgColor
 import com.example.firebasechatdemo.ui.theme.fontRegular
-import com.example.firebasechatdemo.ui.theme.lightGrey
-import com.example.firebasechatdemo.ui.theme.loginBgColor
+import com.example.firebasechatdemo.ui.theme.lightBlueReceiverBgColor
+import com.example.firebasechatdemo.ui.theme.whiteColor
+import com.example.firebasechatdemo.utils.getTimeFromTimestamp
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -95,7 +99,7 @@ fun BottomBarItem(
             .padding(horizontal = 15.dp)
             .fillMaxWidth()
             .padding(bottom = 15.dp)
-            .background(Color.White)
+            .background(color = blueBgColor)
     ) {
         SpacerVertical(10.dp)
         if (chatViewModel.selectedImageUri.value != null) {
@@ -103,7 +107,7 @@ fun BottomBarItem(
                 modifier = Modifier
                     .size(80.dp)
                     .clip(shape = RoundedCornerShape(12.dp))
-                    .border(width = 2.dp, shape = RoundedCornerShape(12.dp), color = lightGrey)
+                    .border(width = 2.dp, shape = RoundedCornerShape(12.dp), color = whiteColor)
                     .clickable(
                         onClick = {
                             chatViewModel.selectedImageUri.value = null
@@ -127,7 +131,7 @@ fun BottomBarItem(
                 modifier = Modifier
                     .size(80.dp)
                     .clip(shape = RoundedCornerShape(12.dp))
-                    .border(width = 2.dp, shape = RoundedCornerShape(12.dp), color = lightGrey)
+                    .border(width = 2.dp, shape = RoundedCornerShape(12.dp), color = whiteColor)
                     .clickable(
                         onClick = {
                             chatViewModel.selectedDocUri.value = null
@@ -164,12 +168,13 @@ fun BottomBarItem(
                     placeholder = {
                         NormalText(
                             label = stringResource(R.string.message),
-                            style = fontRegular.copy(color = lightGrey, fontSize = 16.sp)
+                            style = fontRegular.copy(color = whiteColor, fontSize = 16.sp)
                         )
                     },
                     onValueChange = {
                         chatViewModel.chatMessageValue.value = it
                     },
+                    textStyle = fontRegular.copy(color = whiteColor),
                     trailingIcon = {
                         Image(
                             painter = painterResource(id = R.drawable.ic_clip),
@@ -177,10 +182,18 @@ fun BottomBarItem(
                             modifier = Modifier.clickable(
                                 onClick = {
                                     onSelectOptions()
-                                })
+                                }),
+                            colorFilter = ColorFilter.tint(whiteColor)
                         )
                     },
-                    shape = RoundedCornerShape(12.dp)
+                    shape = RoundedCornerShape(12.dp),
+                    maxLines = 5,
+                    colors = OutlinedTextFieldDefaults.colors(
+                        unfocusedBorderColor = whiteColor.copy(alpha = 0.4f),
+                        focusedBorderColor = whiteColor,
+                        disabledBorderColor = whiteColor,
+                        cursorColor = whiteColor
+                        )
                 )
             }
 
@@ -192,7 +205,11 @@ fun BottomBarItem(
                     .height(58.dp)
                     .clip(shape = RoundedCornerShape(12.dp))
                     .background(Color.Transparent)
-                    .border(width = 2.dp, shape = RoundedCornerShape(12.dp), color = loginBgColor)
+                    .border(
+                        width = 1.dp,
+                        shape = RoundedCornerShape(12.dp),
+                        color = whiteColor.copy(alpha = 0.5f)
+                    )
                     .clickable(onClick = {
                         if ((!chatViewModel.chatMessageValue.value.text.isNullOrEmpty()) || (!chatViewModel.imageUriValue.value.isNullOrEmpty())) {
                             onClick()
@@ -202,7 +219,7 @@ fun BottomBarItem(
                 Image(
                     painter = painterResource(id = R.drawable.ic_send),
                     contentDescription = "",
-                    colorFilter = ColorFilter.tint(loginBgColor),
+                    colorFilter = ColorFilter.tint(whiteColor),
                     modifier = Modifier.size(35.dp)
                 )
             }
@@ -229,36 +246,47 @@ fun LeftChatItem(chatMsg: AddChatMessageModel) {
                 .padding(start = 15.dp, end = 35.dp, top = 8.dp, bottom = 8.dp)
                 .clip(
                     shape = RoundedCornerShape(
-                        topStart = 12.dp, topEnd = 12.dp, bottomEnd = 12.dp
+                        25.dp
                     )
                 )
                 .border(
-                    width = 2.dp, shape = RoundedCornerShape(
-                        topStart = 12.dp, topEnd = 12.dp, bottomEnd = 12.dp
-                    ), color = loginBgColor
+                    width = 1.dp,
+                    shape = RoundedCornerShape(
+                        25.dp
+                    ),
+                    color = whiteColor.copy(alpha = 0.3f)
                 )
-                .padding(10.dp), horizontalAlignment = Alignment.End
+                .background(color = if (chatMsg.imageUrl.isNotEmpty()) Color.Transparent else lightBlueReceiverBgColor)
+                .padding(
+                    start = if (chatMsg.imageUrl.isNotEmpty()) 0.dp else 15.dp,
+                    end = if (chatMsg.imageUrl.isNotEmpty()) 0.dp else 15.dp,
+                    top = if (chatMsg.imageUrl.isNotEmpty()) 0.dp else 15.dp,
+                    bottom = 15.dp
+                ),
+            horizontalAlignment = Alignment.End
         ) {
             if (!chatMsg.imageUrl.isNullOrEmpty()) {
-
                 if (painter.state is AsyncImagePainter.State.Loading) {
                     SpinningProgressBar()
                 } else {
                     Image(
                         painter = painter,
                         contentDescription = null,
-                        contentScale = ContentScale.Fit,
-                        modifier = Modifier.size(120.dp)
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .size(height = 120.dp, width = 150.dp)
+                            .clip(shape = RoundedCornerShape(topEnd = 25.dp, topStart = 25.dp))
                     )
                 }
             } else {
-                Text(text = chatMsg.last_msg, textAlign = TextAlign.Start)
+                Text(text = chatMsg.last_msg, textAlign = TextAlign.Start, color = whiteColor)
             }
-            SpacerVertical(5.dp)
+            SpacerVertical(10.dp)
             NormalText(
                 label = getTimeFromTimestamp(chatMsg.last_time),
-                style = fontRegular.copy(fontSize = 12.sp, color = lightGrey),
+                style = fontRegular.copy(fontSize = 12.sp, color = whiteColor),
                 textAlign = TextAlign.End,
+                modifier = Modifier.offset(x = if (chatMsg.imageUrl.isEmpty()) 0.dp else (-10).dp)
             )
         }
     }
@@ -284,15 +312,24 @@ fun RightChatItem(chatMsg: AddChatMessageModel) {
                 .padding(start = 35.dp, end = 15.dp, top = 8.dp, bottom = 8.dp)
                 .clip(
                     shape = RoundedCornerShape(
-                        topStart = 12.dp, topEnd = 12.dp, bottomStart = 12.dp
+                        25.dp
                     )
                 )
                 .border(
-                    width = 2.dp, shape = RoundedCornerShape(
-                        topStart = 12.dp, topEnd = 12.dp, bottomStart = 12.dp
-                    ), color = loginBgColor
+                    width = 1.dp,
+                    shape = RoundedCornerShape(
+                        25.dp
+                    ),
+                    color = whiteColor.copy(alpha = 0.3f)
                 )
-                .padding(10.dp), horizontalAlignment = Alignment.End
+                .background(color = if (chatMsg.imageUrl.isNotEmpty()) Color.Transparent else darkBlueSenderBgColor)
+                .padding(
+                    start = if (chatMsg.imageUrl.isNotEmpty()) 0.dp else 15.dp,
+                    end = if (chatMsg.imageUrl.isNotEmpty()) 0.dp else 15.dp,
+                    top = if (chatMsg.imageUrl.isNotEmpty()) 0.dp else 15.dp,
+                    bottom = 15.dp
+                ),
+            horizontalAlignment = Alignment.End
         ) {
             if (chatMsg.imageUrl.isNotEmpty()) {
                 if (painter.state is AsyncImagePainter.State.Loading) {
@@ -301,18 +338,24 @@ fun RightChatItem(chatMsg: AddChatMessageModel) {
                     Image(
                         painter = painter,
                         contentDescription = null,
-                        contentScale = ContentScale.Fit,
-                        modifier = Modifier.size(120.dp)
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .size(height = 120.dp, width = 150.dp)
+                            .clip(shape = RoundedCornerShape(topEnd = 25.dp, topStart = 25.dp))
                     )
                 }
             } else {
-                Text(text = chatMsg.last_msg, textAlign = TextAlign.Start)
+                Text(text = chatMsg.last_msg, textAlign = TextAlign.Start, color = whiteColor)
             }
             SpacerVertical(5.dp)
             NormalText(
                 label = getTimeFromTimestamp(chatMsg.last_time),
-                style = fontRegular.copy(fontSize = 12.sp, color = lightGrey),
+                style = fontRegular.copy(fontSize = 12.sp, color = whiteColor),
                 textAlign = TextAlign.End,
+                modifier = Modifier.offset(
+                    x = if (chatMsg.imageUrl.isEmpty()) 0.dp else (-10).dp,
+                    y = if (chatMsg.imageUrl.isEmpty()) 0.dp else 4.dp
+                )
             )
         }
     }
@@ -327,7 +370,7 @@ fun CameraGalleryBottomSheet(
 ) {
     val file = context.createImageFile()
     val uri = FileProvider.getUriForFile(
-        Objects.requireNonNull(context), "com.example.firebasechat" + ".provider", file
+        Objects.requireNonNull(context), "com.example.firebasechatdemo" + ".provider", file
     )
 
     var capturedImageUri by remember {
@@ -420,7 +463,7 @@ fun BottomSheetIconButton(
         modifier = Modifier
             .size(60.dp)
             .clip(shape = RoundedCornerShape(12.dp))
-            .background(lightGrey)
+            .background(blueBgColor)
             .clickable(onClick = onClick),
         contentAlignment = Alignment.Center
     ) {

@@ -34,7 +34,7 @@ import com.example.firebasechatdemo.utils.SessionManagerClass
 import com.example.firebasechatdemo.App
 import com.example.firebasechatdemo.R
 import com.example.firebasechatdemo.screens.home.HomeScreen
-import com.example.firebasechatdemo.ui.theme.loginBgColor
+import com.example.firebasechatdemo.ui.theme.blueBgColorLight
 import kotlinx.coroutines.delay
 
 @RequiresApi(Build.VERSION_CODES.O)
@@ -101,7 +101,7 @@ fun SplashScreen(navigateToAuthOrMainScreen: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxSize()
-            .background(loginBgColor),
+            .background(blueBgColorLight),
         contentAlignment = Alignment.Center
     ) {
         Image(

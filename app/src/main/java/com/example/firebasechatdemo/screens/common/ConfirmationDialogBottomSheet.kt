@@ -28,9 +28,11 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import androidx.compose.ui.window.DialogWindowProvider
 import com.example.firebasechatdemo.R
+import com.example.firebasechatdemo.ui.theme.blueBgColor
+import com.example.firebasechatdemo.ui.theme.blueBgColorLight
 import com.example.firebasechatdemo.ui.theme.fontRegular
 import com.example.firebasechatdemo.ui.theme.fontSemiBold
-import com.example.firebasechatdemo.ui.theme.loginBgColor
+import com.example.firebasechatdemo.ui.theme.whiteColor
 
 
 @Composable
@@ -56,7 +58,7 @@ fun deleteConfirmationDialog(
                 .fillMaxWidth()
                 .height(dialogHeight),
             shape = RoundedCornerShape(20.dp),
-            colors = CardDefaults.cardColors(Color.White)
+            colors = CardDefaults.cardColors(blueBgColor)
         ) {
             Column(
                 modifier = Modifier
@@ -68,7 +70,7 @@ fun deleteConfirmationDialog(
                 NormalText(
                     label = dialogTitle,
                     style = fontSemiBold.copy(
-                        color = loginBgColor,
+                        color = whiteColor,
                         fontSize = 20.sp,
                         fontWeight = FontWeight.Bold,
                     ),
@@ -96,7 +98,7 @@ fun deleteConfirmationDialog(
                                 .weight(0.1f)
                                 .border(
                                     width = 1.dp,
-                                    color = loginBgColor,
+                                    color = blueBgColor,
                                     shape = RoundedCornerShape(12.dp)
                                 ), icon = null
                         ) {
@@ -106,13 +108,13 @@ fun deleteConfirmationDialog(
 
                         GradientButtonWithIcon1(
                             style = fontRegular.copy(
-                                color = Color.White, fontSize = 18.sp,
+                                color = whiteColor, fontSize = 18.sp,
                                 lineHeight = 24.sp,
                             ),
                             height = 50.dp,
                             icon = null,
                             label = "Yes",
-                            iconTint = Color.White,
+                            iconTint = blueBgColorLight,
                             borderRadious = 12.dp,
                             modifier = Modifier.weight(0.1f),
                         ) {

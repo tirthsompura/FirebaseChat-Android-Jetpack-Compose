@@ -29,8 +29,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.firebasechatdemo.R
+import com.example.firebasechatdemo.ui.theme.blueBgColorLight
 import com.example.firebasechatdemo.ui.theme.fontSemiBold
-import com.example.firebasechatdemo.ui.theme.loginBgColor
+import com.example.firebasechatdemo.ui.theme.whiteColor
 import com.example.firebasechatdemo.utils.FirebaseKeyConstants
 
 @Composable
@@ -47,9 +48,7 @@ fun ChatDetailTopBar(
         modifier = Modifier
             .fillMaxWidth()
             .height(60.dp)
-            .border(
-                width = 2.dp, color = loginBgColor, shape = RoundedCornerShape(0.dp)
-            )
+            .background(color = blueBgColorLight)
             .padding(horizontal = 15.dp),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
@@ -64,7 +63,7 @@ fun ChatDetailTopBar(
             Image(
                 painter = painterResource(id = R.drawable.ic_white_arrow),
                 contentDescription = "",
-                colorFilter = ColorFilter.tint(loginBgColor),
+                colorFilter = ColorFilter.tint(whiteColor),
                 modifier = Modifier
                     .rotate(270f)
                     .size(35.dp)
@@ -79,14 +78,15 @@ fun ChatDetailTopBar(
             ) {
                 NormalText(
                     label = name.value,
-                    style = fontSemiBold.copy(fontSize = 20.sp, color = Color.Black),
+                    style = fontSemiBold.copy(fontSize = 20.sp),
                     modifier = Modifier.padding(top = 1.dp)
                 )
 
                 val userStatus = if (status.value == FirebaseKeyConstants.ONLINE) FirebaseKeyConstants.ONLINE else FirebaseKeyConstants.OFFLINE
+                val userStatusColor = if (status.value == FirebaseKeyConstants.ONLINE) whiteColor    else Color.Black
                 NormalText(
                     label = userStatus,
-                    style = fontSemiBold.copy(fontSize = 12.sp, color = Color.Black),
+                    style = fontSemiBold.copy(fontSize = 12.sp, color = userStatusColor),
                     modifier = Modifier.padding(top = 1.dp, start = 2.dp)
                 )
             }
@@ -100,7 +100,7 @@ fun ChatDetailTopBar(
                 .clip(shape = RoundedCornerShape(8.dp))
                 .background(Color.Transparent)
                 .border(
-                    width = 1.dp, color = loginBgColor, shape = RoundedCornerShape(8.dp)
+                    width = 1.dp, color = whiteColor, shape = RoundedCornerShape(8.dp)
                 )
                 .padding(3.dp)
                 .clickable(
@@ -113,7 +113,7 @@ fun ChatDetailTopBar(
             Image(
                 painter = painterResource(id = R.drawable.ic_delete),
                 contentDescription = "",
-                colorFilter = ColorFilter.tint(loginBgColor),
+                colorFilter = ColorFilter.tint(whiteColor),
                 modifier = Modifier.size(20.dp)
             )
         }
